@@ -250,7 +250,7 @@ const pets = [
 
     let domString = "";
     
-    for(const pet of pets){
+    for(const pet of array){
       
       domString += 
       `
@@ -268,21 +268,21 @@ const pets = [
         </div>
       </div>
       `
-    };
+    }
 
     renderToDom('#app', domString);
-  }
+  };
 
   cardsOnDom(pets);
 
   const filterContainer = document.querySelector('#group');
   const filterAnimalByType = (animal) => {
-    const filteredPets = pets.filter((pet) => pet.type === animal);
+    const filteredPets = pets.filter((pet) => pet.type === animal)
     cardsOnDom(filteredPets);
   }
 
   filterContainer.addEventListener('click', (e) => {
-    console.log(e)
+    
     switch (e.target.id) {
       case 'cat-btn':
         filterAnimalByType('cat');
