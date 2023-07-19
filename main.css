@@ -1,0 +1,46 @@
+#app {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 200px;
+}
+
+#group {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin: 20px 0;
+}
+
+.red {
+  color: black;
+  background-color: lightcoral;
+  width: 150px;
+}
+
+.green {
+  color: black;
+  background-color: lightgreen;
+  width: 150px;
+}
+
+.yellow {
+  color: black;
+  background-color: lightyellow;
+  width: 150px;
+}
+
+.btn-group {
+  width: 400px;
+  margin: 10px auto;
+}
+
+.card-footer {
+  margin: 0;
+  background-color: lightgreen;
+}
+
+.card-body {
+  padding: 0;  
+}
