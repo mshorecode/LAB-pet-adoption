@@ -1,4 +1,4 @@
-const pets = [
+  const pets = [
     {
       id: 1,
       name: "Dusty",
@@ -192,7 +192,7 @@ const pets = [
       imageUrl: "http://www.dogbreedplus.com/dog_breeds/images/basset-hound-4.jpg"
     },
     {
-      id: 25,
+        id: 25,
       name: "Salem",
       color: "Red",
       specialSkill: "Knows the words to 4 rap songs.",
@@ -241,6 +241,11 @@ const pets = [
     }
   ];
 
+  const app = document.querySelector('#app');
+  const filterContainer = document.querySelector('#group');
+  const formButton = document.querySelector('#show-form-btn');
+  const form = document.querySelector('form');
+
   const renderToDom = (divId, html) => {
     const targetedDiv = document.querySelector(divId);
     targetedDiv.innerHTML = html;
@@ -265,6 +270,7 @@ const pets = [
           <div class="card-footer">
             <p class="card-text">${pet.type}</p>
           </div>
+          <button type="button" id="delete-btn-pet--${pet.id}">Delete</button>
         </div>
       </div>
       `
@@ -273,32 +279,125 @@ const pets = [
     renderToDom('#app', domString);
   };
 
-  cardsOnDom(pets);
-
-  const filterContainer = document.querySelector('#group');
   const filterAnimalByType = (animal) => {
     const filteredPets = pets.filter((pet) => pet.type === animal)
     cardsOnDom(filteredPets);
-  }
+  };
 
-  filterContainer.addEventListener('click', (e) => {
-    
-    switch (e.target.id) {
-      case 'cat-btn':
-        filterAnimalByType('cat');
-        break;
+  const petForm = () => {
 
-      case 'dog-btn':
-        filterAnimalByType('dog');        
-        break;
-      
-      case 'dino-btn':
-        filterAnimalByType('dino');
-        break;
+    let domString = '';
+
+    domString += 
+    `
+      <div class="mb-3">
+        <label for="name" class="form-label">Name:</label>
+        <input 
+          type="text" 
+          class="form-control" 
+          id="name"
+        />
+      </div>
+      <div class="mb-3">
+        <label for="color" class="form-label">Color:</label>
+        <input 
+          type="text" 
+          class="form-control" 
+          id="color"
+        />
+      </div>
+      <div class="mb-3">
+        <label for="specialSkill" class="form-label">Special Skill:</label>
+        <input 
+          type="text" 
+          class="form-control" 
+          id="specialSkill"
+        />
+      </div>
+      <div class="mb-3">
+        <label for="type" class="form-label">Type:</label>
+        <input 
+          type="text" 
+          class="form-control" 
+          id="type"
+        />
+        </div>
+        <div class="mb-3"> 
+        <label for="imageUrl" class="form-label">Upload Image:</label>
+        <input 
+          type="text" 
+          class="form-control" 
+          id="imageUrl"
+        />
+      </div>
+      <button type="submit" class="btn btn-primary mb-3">Submit</button>
     
-      default:
-        cardsOnDom(pets);
-        break;
+    `
+    renderToDom("#form-container", domString);
+  };  
+
+  const createPet = (e) => {
+    e.preventDefault();
+
+    const petObj = {
+      id: pets.length + 1,
+      name: document.querySelector('#name').value,
+      color: document.querySelector('#color').value,
+      specialSkill: document.querySelector('#specialSkill').value,
+      type: document.querySelector('#type').value,
+      imageUrl: document.querySelector('#imageUrl').value,
     }
-  })
     
+    pets.push(petObj);
+    cardsOnDom(pets);
+    form.reset();
+  };
+
+  const eventListeners = () => {
+    filterContainer.addEventListener('click', (e) => {
+    
+      switch (e.target.id) {
+        case 'cat-btn':
+          filterAnimalByType('cat');
+          break;
+  
+        case 'dog-btn':
+          filterAnimalByType('dog');        
+          break;
+        
+        case 'dino-btn':
+          filterAnimalByType('dino');
+          break;
+      
+        default:
+          cardsOnDom(pets);
+          break;
+      }
+    });  
+
+    formButton.addEventListener('click', (e) => {
+      petForm();
+    });
+
+    form.addEventListener('submit', createPet);
+
+    app.addEventListener('click', (e) => {
+      if (e.target.id.includes("delete-btn-pet")) {
+        const [, int] = e.target.id.split('--');
+
+        const index = pets.findIndex((pet) => pet.id === Number(int));
+
+        pets.splice(index, 1);
+
+        cardsOnDom(pets);
+
+      }
+    });
+  };
+
+  const startApp = () => {
+    cardsOnDom(pets);
+    eventListeners();
+  };
+
+  startApp();
