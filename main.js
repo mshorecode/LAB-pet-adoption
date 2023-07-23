@@ -247,7 +247,7 @@
   const form = document.querySelector('form');
   const formButtons = () => {
     let domString = "";
-    domString += `<button id="${buttonToggle ? "close-form" : "show-form"}-button">${buttonToggle ? "Close" : "Show"}</button>`;
+    domString += `<button id="${buttonToggle ? "close-form" : "show-form"}-button" class="form-btn">${buttonToggle ? "Close" : "Show"}</button>`;
     renderToDom("#form-btn-container", domString)
   };
 
@@ -274,10 +274,10 @@
           <p class="card-text">${pet.color}</p>
           <p class="card-text">${pet.specialSkill}</p>
         </div>
+        <button type="button" id="delete-btn-pet--${pet.id}" class="btn-danger">Delete</button>
         <div class="card-footer">
           <p class="card-text">${pet.type}</p>
         </div>
-        <button type="button" id="delete-btn-pet--${pet.id}" class="btn-danger">Delete</button>
       </div>
       `
     }
@@ -335,7 +335,7 @@
           id="imageUrl"
         />
       </div>
-      <button type="submit" class="btn btn-primary mb-3">Submit</button>
+      <button type="submit" class="btn btn-primary mb-3 submit">Submit</button>
     
     `
     renderToDom("#form-container", domString);
