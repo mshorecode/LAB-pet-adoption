@@ -241,11 +241,16 @@
     }
   ];
 
+  // Query Selectors
   const app = document.querySelector('#app');
   const filterContainer = document.querySelector('#group');
-  const formButton = document.querySelector('#show-form-btn');
   const form = document.querySelector('form');
+  const formButtons = () => {
+    let domString = "";
+    domString += `<button id="${buttonToggle ? "close-form" : "show-form"}-button">${buttonToggle ? "Close" : "Show"}</button>`
+  };
 
+  // Funtions
   const renderToDom = (divId, html) => {
     const targetedDiv = document.querySelector(divId);
     targetedDiv.innerHTML = html;
@@ -375,22 +380,31 @@
       }
     });  
 
-    formButton.addEventListener('click', (e) => {
-      petForm();
-    });
+    // formButtons.addEventListener('click', (e) => {
+    //   petForm();
+    // });
 
     form.addEventListener('submit', createPet);
 
     app.addEventListener('click', (e) => {
       if (e.target.id.includes("delete-btn-pet")) {
         const [, int] = e.target.id.split('--');
-
         const index = pets.findIndex((pet) => pet.id === Number(int));
-
         pets.splice(index, 1);
-
         cardsOnDom(pets);
+      }
 
+      if (e.target.id === "show-form-btn") {
+        buttonToggle = true;
+        petForm();
+        formButtons();
+      }
+
+      if (e.target.id === "close-form-btn") {
+        buttonToggle = false;
+        let domString = '';
+        renderToDom('#form-container', domString);
+        formButtons();
       }
     });
   };
