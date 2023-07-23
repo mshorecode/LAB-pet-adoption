@@ -240,18 +240,19 @@
       imageUrl: "http://lsae2.iypcdn.com/static//modules/uploads/photos/language1/dino-live-22.jpg?119"
     }
   ];
-
+  let buttonToggle = false;
   // Query Selectors
   const app = document.querySelector('#app');
-  const filterContainer = document.querySelector('#group');
+  const filterContainer = document.querySelector('#filter-container');
   const form = document.querySelector('form');
   const formButtons = () => {
     let domString = "";
-    domString += `<button id="${buttonToggle ? "close-form" : "show-form"}-button">${buttonToggle ? "Close" : "Show"}</button>`
+    domString += `<button id="${buttonToggle ? "close-form" : "show-form"}-button">${buttonToggle ? "Close" : "Show"}</button>`;
+    renderToDom("#form-btn-container", domString)
   };
 
   // Funtions
-  const renderToDom = (divId, html) => {
+  const renderToDom = (divId, html) => {  // targets div and renders interpolated html
     const targetedDiv = document.querySelector(divId);
     targetedDiv.innerHTML = html;
   };
@@ -272,16 +273,15 @@
         <div class="card-body">
           <p class="card-text">${pet.color}</p>
           <p class="card-text">${pet.specialSkill}</p>
-          <div class="card-footer">
-            <p class="card-text">${pet.type}</p>
-          </div>
-          <button type="button" id="delete-btn-pet--${pet.id}">Delete</button>
         </div>
+        <div class="card-footer">
+          <p class="card-text">${pet.type}</p>
+        </div>
+        <button type="button" id="delete-btn-pet--${pet.id}" class="btn-danger">Delete</button>
       </div>
       `
     }
-
-    renderToDom('#app', domString);
+    renderToDom('#card-container', domString);
   };
 
   const filterAnimalByType = (animal) => {
@@ -359,7 +359,7 @@
   };
 
   const eventListeners = () => {
-    filterContainer.addEventListener('click', (e) => {
+    filterContainer.addEventListener('click', (e) => {  // switch statement to filter for different pet types via button click 
     
       switch (e.target.id) {
         case 'cat-btn':
@@ -378,31 +378,27 @@
           cardsOnDom(pets);
           break;
       }
-    });  
+    });     
 
-    // formButtons.addEventListener('click', (e) => {
-    //   petForm();
-    // });
-
-    form.addEventListener('submit', createPet);
+    form.addEventListener('submit', createPet);  // functionality for submit button on form
 
     app.addEventListener('click', (e) => {
-      if (e.target.id.includes("delete-btn-pet")) {
+      if (e.target.id.includes("delete")) {  // delete button functionality. deletes card and rerenders dom
         const [, int] = e.target.id.split('--');
         const index = pets.findIndex((pet) => pet.id === Number(int));
         pets.splice(index, 1);
         cardsOnDom(pets);
       }
 
-      if (e.target.id === "show-form-btn") {
+      if (e.target.id.includes("show-form-button")) {  // show form functionality
         buttonToggle = true;
         petForm();
         formButtons();
       }
 
-      if (e.target.id === "close-form-btn") {
-        buttonToggle = false;
+      if (e.target.id.includes("close-form-button")) {  // close form functionality
         let domString = '';
+        buttonToggle = false;
         renderToDom('#form-container', domString);
         formButtons();
       }
@@ -411,6 +407,7 @@
 
   const startApp = () => {
     cardsOnDom(pets);
+    formButtons();
     eventListeners();
   };
 
