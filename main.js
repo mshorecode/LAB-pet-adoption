@@ -245,6 +245,7 @@
   const app = document.querySelector('#app');
   const filterContainer = document.querySelector('#filter-container');
   const form = document.querySelector('form');
+  const btn = document.querySelector('#form-btn-container')
   const formButtons = () => {
     let domString = "";
     domString += `<button id="${buttonToggle ? "close-form" : "show-form"}-button" class="form-btn">${buttonToggle ? "Close" : "Show"}</button>`;
@@ -389,14 +390,16 @@
         pets.splice(index, 1);
         cardsOnDom(pets);
       }
+    });
 
-      if (e.target.id.includes("show-form-button")) {  // show form functionality
+    btn.addEventListener('click', (e) => {
+      if (e.target.id.includes("show-form")) {  // show form functionality
         buttonToggle = true;
         petForm();
         formButtons();
       }
 
-      if (e.target.id.includes("close-form-button")) {  // close form functionality
+      if (e.target.id.includes("close-form")) {  // close form functionality
         let domString = '';
         buttonToggle = false;
         renderToDom('#form-container', domString);
