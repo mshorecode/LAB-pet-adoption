@@ -245,7 +245,7 @@
   const app = document.querySelector('#app');
   const filterContainer = document.querySelector('#filter-container');
   const form = document.querySelector('form');
-  const btn = document.querySelector('#form-btn-container')
+  const btn = document.querySelector('#form-btn-container');
   const formButtons = () => {
     let domString = "";
     domString += `<button id="${buttonToggle ? "close-form" : "show-form"}-button" class="form-btn">${buttonToggle ? "Close" : "Show"}</button>`;
@@ -267,6 +267,14 @@
       domString += 
       `
       <div class="card" style="width: 18rem;">
+        <div class="delete">
+          <button type="button" id="delete-btn-pet--${pet.id}" class="btn-danger">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
+              <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5Zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5Zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6Z"/>
+              <path d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1ZM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118ZM2.5 3h11V2h-11v1Z"/>
+            </svg>
+          </button>
+        </div>
         <div class="card-header">
           <h5 class="card-title">${pet.name}</h5>
         </div>
@@ -275,7 +283,6 @@
           <p class="card-text">${pet.color}</p>
           <p class="card-text">${pet.specialSkill}</p>
         </div>
-        <button type="button" id="delete-btn-pet--${pet.id}" class="btn-danger">Delete</button>
         <div class="card-footer">
           <p class="card-text">${pet.type}</p>
         </div>
